@@ -99,6 +99,6 @@ install: confirm audit no-dirty build/release
 
 ## uninstall: remove the application's binary from ~/bin/
 .PHONY: uninstall
-uninstall: confirm audit
-	rm ~/bin/${binary_name}
+uninstall: confirm
+	[ ! -f ~/bin/${binary_name} ] || rm ~/bin/${binary_name}
 
