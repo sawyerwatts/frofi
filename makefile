@@ -61,19 +61,9 @@ tidy:
 	go mod tidy -v
 	go fmt ./...
 
-## run: build/debug and run the binary using .env
-.PHONY: run
-run: build/debug
-	/tmp/bin/${binary_name}
-
-## build/debug: build the application with -race, -v, etc
-.PHONY: build/debug
-build/debug:
-	go build -v -race -o=/tmp/bin/${binary_name} ${main_package_path}
-
-## build/release: build the application without -race, -v, etc, for a specific OS and architecture
-.PHONY: build/release
-build/release:
+## build: build the application for a specific OS and architecture. To run, `source ./env` and use the `frofi` alias
+.PHONY: build
+build:
 	GOOS=linux GOARCH=amd64 go build -o=/tmp/bin/${binary_name} ${main_package_path}
 
 ## build/clean: remove build artifacts
@@ -90,15 +80,4 @@ build/clean:
 .PHONY: push
 push: confirm audit no-dirty
 	git push
-
-## install: build and add the application's binary to ~/bin/
-.PHONY: install
-install: confirm audit no-dirty build/release
-	mkdir -p ~/bin
-	mv /tmp/bin/${binary_name} ~/bin
-
-## uninstall: remove the application's binary from ~/bin/
-.PHONY: uninstall
-uninstall: confirm
-	[ ! -f ~/bin/${binary_name} ] || rm ~/bin/${binary_name}
 

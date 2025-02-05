@@ -1,0 +1,5 @@
+#!/usr/bin/bash
+
+alias cobra-cli="go run github.com/spf13/cobra-cli@v1.3.0"
+alias frofi="/tmp/bin/frofi"
+
